@@ -7,9 +7,9 @@
       </form>
   </div>
 
-<div class="newtodo" v-for="todo in todosArray" v-bind:key="todo.id">
-  <createTodo :newTodo="todo.text" />
-</div>
+<createTodo class="newtodo" v-for="todo in todosArray" v-bind:key="todo.id" :items="todo"></createTodo>
+<!-- <createTodo v-on:response="(msg)=> childmsg=msg"></createTodo> -->
+
    <!-- <div class="newtodo" v-for="todo in todosArray" v-bind:key="todo.id">  -->
     <!-- <input class="checkBox" type="checkbox" v-model="todo.done"  />
     <input class="tasks" type="text" v-bind:class="{done:todo.done}" v-model="todo.text" v-on:click="showdropdown = !showdropdown" />
@@ -39,26 +39,17 @@ export default {
     return {
       newTodo:'',
       todosArray:[],
-      showdropdown:false,
       priority:'',
-      options:['none','low','medium','high']
+      childmsg:'no child msg yet'
     }
   },
   methods:{
     addTodo(){
       if(this.newTodo=== ""){alert('please enter the task');return}
-      this.todosArray.push({id:id++, text:this.newTodo, done: false, notes:"", date:"" , priority:this.priority })
+      this.todosArray.push({id:id++, text:this.newTodo, checkbox: false, notes:"", dateInput:"" , priority:this.priority })
       localStorage.setItem("todosArray",JSON.stringify(this.todosArray))
       this.newTodo=''
      
-    },
-    toggle(todo){
-      const todoId=this.todosArray.map(e => e.id)
-      console.log(todoId.indexOf(todo))
-      console.log(todo)
-      if(todoId.indexOf(todo)===todo){
-      this.showdropdown = !this.showdropdown
-      }
     },
     removeTodo(todo){
       this.todosArray.splice(this.todosArray.indexOf(todo),1)
@@ -85,11 +76,6 @@ export default {
 #todotitle{
   height:40px;
   text-align: center;
-}
-.newtodo{
-  text-align: center;
-  padding-right: 70px;
-   margin-top: 5px;
 }
 #newinput{
   width:380px;
