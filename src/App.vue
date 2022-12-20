@@ -22,99 +22,101 @@
 </template>
 
 <script>
-  // let id = 0 || Math.max(...this.todosArray.map((e) => e.id)) + 1;
+import createTodo from "./components/newtodo.vue"
+// let id = 0;
+export default {
+  name: "App",
+  data() {
+    return {
+      todosArray: JSON.parse(localStorage.getItem("todosArray")) || [],
+      id: 0,
+      newTodo: "",
+      priority: "",
+    }
+  },
 
-  import createTodo from "./components/newtodo.vue";
+  methods: {
+    fetchTodos() {
+      this.todosArray = JSON.parse(localStorage.getItem("todosArray"))
+    },
+    addTodo() {
+      if (this.newTodo === "") {
+        console.log(Math.max(this.todosArray.length))
+        alert("please enter the task")
+        return
+      }
 
-  export default {
-    name: "App",
-    data() {
-      return {
-        todosArray: JSON.parse(localStorage.getItem("todosArray")) || [],
-        id: 0,
-        newTodo: "",
+      this.todosArray.push({
+        id:
+          this.todosArray.length === 0
+            ? 0
+            : Math.max(...this.todosArray.map((e) => e.id)) + 1,
+        text: this.newTodo,
+        checkbox: false,
+        notes: "",
+        dateInput: "",
         priority: "",
-      };
+      })
+      localStorage.setItem("todosArray", JSON.stringify(this.todosArray))
+      this.newTodo = ""
     },
-    methods: {
-      fetchTodos() {
-        this.todosArray = JSON.parse(localStorage.getItem("todosArray"));
-      },
-      addTodo() {
-        if (this.newTodo === "") {
-          console.log(Math.max(...this.todosArray.map((e) => e.id)));
-          console.log(this.id);
-          alert("please enter the task");
-          return;
-        }
-        this.todosArray.push({
-          id: this.id || Math.max(...this.todosArray.map((e) => e.id)) + 1,
-          text: this.newTodo,
-          checkbox: false,
-          notes: "",
-          dateInput: "",
-          priority: "",
-        });
-        localStorage.setItem("todosArray", JSON.stringify(this.todosArray));
-        this.newTodo = "";
-      },
-    },
-    components: {
-      createTodo,
-    },
-  };
+  },
+  components: {
+    createTodo,
+  },
+}
 </script>
 
 <style>
-  #app {
-    background-color: aquamarine;
-  }
-  #h1 {
-    text-align: center;
-    font-size: 35px;
-  }
-  #todotitle {
-    height: 40px;
-    text-align: center;
-  }
-  #newinput {
-    width: 380px;
-    font-size: 20px;
-    height: 30px;
-  }
-  #sub-btn {
-    width: 90px;
-    font-size: 15px;
-    font-weight: bold;
-    height: 37px;
-    margin-top: 5px;
-  }
-  #sub-btn:hover {
-    background-color: greenyellow;
-  }
-  .done {
-    text-decoration: line-through;
-  }
+#app {
+  background-color: aquamarine;
+}
+#h1 {
+  text-align: center;
+  font-size: 35px;
+}
+#todotitle {
+  height: 40px;
+  text-align: center;
+}
+#newinput {
+  width: 380px;
+  font-size: 20px;
+  height: 30px;
+}
+#sub-btn {
+  width: 90px;
+  font-size: 15px;
+  font-weight: bold;
+  height: 37px;
+  margin-top: 5px;
+}
+#sub-btn:hover {
+  background-color: greenyellow;
+}
+.done {
+  text-decoration: line-through;
+}
 
-  .checkBox {
-    height: 20px;
-    width: 30px;
-    margin-right: 1px;
-  }
-  .tasks {
-    width: 380px;
-    font-weight: bold;
-    font-size: 16px;
-    height: 30px;
-    padding-left: 10px;
-  }
-  .dropdown-menu {
-    border-style: groove;
-    background-color: rgb(85, 255, 198);
-  }
-  .textarea {
-    width: 380px;
-    height: 180px;
-    resize: none;
-  }
+.checkBox {
+  height: 20px;
+  width: 30px;
+  margin-right: 1px;
+}
+.tasks {
+  width: 380px;
+  font-weight: bold;
+  font-size: 16px;
+  height: 30px;
+  padding-left: 10px;
+}
+.dropdown-menu {
+  border-style: groove;
+  background-color: rgb(85, 255, 198);
+}
+.textarea {
+  width: 380px;
+  height: 180px;
+  resize: none;
+}
 </style>
