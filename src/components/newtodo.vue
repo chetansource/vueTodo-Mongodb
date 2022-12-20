@@ -1,6 +1,11 @@
 <template>
   <div class="new-Todos">
-    <input class="checkBox" type="checkbox" v-model="todo.checkbox" />
+    <input
+      class="checkBox"
+      type="checkbox"
+      v-model="todo.checkbox"
+      v-on:click="updateCheckbox"
+    />
     <input
       class="tasks"
       type="text"
@@ -13,16 +18,26 @@
         class="textarea"
         v-model="todo.notes"
         placeholder="notes"
+        v-on:click="updateTodo"
       ></textarea>
       <label for="dateInput">Due Date:</label>
-      <input type="date" id="dateInput" v-model="todo.dateInput" />
+      <input
+        type="date"
+        id="dateInput"
+        v-model="todo.dateInput"
+        v-on:click="updateTodo"
+      />
       <label for="prior">Priority:</label>
       <select id="prior" v-model="todo.priority">
-        <option v-for="priority in options" v-bind:key="priority">
+        <option
+          v-for="priority in options"
+          v-bind:key="priority"
+          v-on:click="updateTodo"
+        >
           {{ priority }}
         </option>
       </select>
-      <button class="destroy">Delete</button>
+      <button class="destroy" v-on:click="deleteTodo(todo.id)">Delete</button>
     </div>
   </div>
 </template>
@@ -31,7 +46,7 @@
   export default {
     name: "createTodo",
     props: ["items"],
-    //   emits:['response'],
+    emits: ["Rerender"],
     data() {
       return {
         todo: this.items,
@@ -43,8 +58,26 @@
       toggle() {
         this.showdropdown = !this.showdropdown;
       },
-      created() {
-        this.$emit("response", "this is child");
+      updateCheckbox() {
+        const tempTodos = JSON.parse(localStorage.getItem("todosArray"));
+        const tempTodo = tempTodos.find((obj) => obj.id === this.todo.id);
+        tempTodo.checkbox = !this.todo.checkbox;
+        localStorage.setItem("todosArray", JSON.stringify(tempTodos));
+      },
+      updateTodo() {
+        const tempTodos = JSON.parse(localStorage.getItem("todosArray"));
+        const tempTodo = tempTodos.find((obj) => obj.id === this.todo.id);
+        tempTodo.notes = this.todo.notes;
+        tempTodo.dateInput = this.todo.dateInput;
+        tempTodo.priority = this.todo.priority;
+        localStorage.setItem("todosArray", JSON.stringify(tempTodos));
+        // this.$emit("Rerender");
+      },
+      deleteTodo(id) {
+        let tempTodos = JSON.parse(localStorage.getItem("todosArray"));
+        tempTodos = tempTodos.filter((todo) => todo.id !== id);
+        localStorage.setItem("todosArray", JSON.stringify(tempTodos));
+        this.$emit("Rerender");
       },
     },
   };

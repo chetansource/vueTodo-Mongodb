@@ -17,62 +17,47 @@
     v-for="todo in todosArray"
     v-bind:key="todo.id"
     :items="todo"
-  ></createTodo>
-  <!-- <createTodo v-on:response="(msg)=> childmsg=msg"></createTodo> -->
-
-  <!-- <div class="newtodo" v-for="todo in todosArray" v-bind:key="todo.id">  -->
-  <!-- <input class="checkBox" type="checkbox" v-model="todo.done"  />
-    <input class="tasks" type="text" v-bind:class="{done:todo.done}" v-model="todo.text" v-on:click="showdropdown = !showdropdown" />
-    <div class="dropdown-menu" v-show="showdropdown" >
-      <textarea  class="textarea" v-model="todo.notes" placeholder="notes"></textarea>
-       <label for="dateInput">Due Date:</label>
-      <input type="date"  id="dateInput" v-model="todo.date"/>
-      <label for="prior">Priority:</label>
-      <select id="prior" v-model="priority">
-        <option v-for="priority in options" v-bind:key="priority"> {{priority}} </option>
-     </select>
-     <button class='destroy' v-on:click='removeTodo(todo)'>Delete</button>
-    </div> -->
-  <!-- </div>  -->
+    @Rerender="fetchTodos"
+  />
 </template>
 
 <script>
-  let id = 0;
+  // let id = 0 || Math.max(...this.todosArray.map((e) => e.id)) + 1;
+
   import createTodo from "./components/newtodo.vue";
 
   export default {
     name: "App",
     data() {
       return {
+        todosArray: JSON.parse(localStorage.getItem("todosArray")) || [],
+        id: 0,
         newTodo: "",
-        todosArray: [],
         priority: "",
-        childmsg: "no child msg yet",
       };
     },
     methods: {
+      fetchTodos() {
+        this.todosArray = JSON.parse(localStorage.getItem("todosArray"));
+      },
       addTodo() {
         if (this.newTodo === "") {
+          console.log(Math.max(...this.todosArray.map((e) => e.id)));
+          console.log(this.id);
           alert("please enter the task");
           return;
         }
         this.todosArray.push({
-          id: id++,
+          id: this.id || Math.max(...this.todosArray.map((e) => e.id)) + 1,
           text: this.newTodo,
           checkbox: false,
           notes: "",
           dateInput: "",
-          priority: this.priority,
+          priority: "",
         });
         localStorage.setItem("todosArray", JSON.stringify(this.todosArray));
         this.newTodo = "";
       },
-      // removeTodo(todo){
-      //   this.todosArray.splice(this.todosArray.indexOf(todo),1)
-      // },
-      //  mounted(){
-      //   this.todosArray=JSON.parse(localStorage.getItem("todosArray")) || []
-      // }
     },
     components: {
       createTodo,
