@@ -1,21 +1,19 @@
 import express from 'express'
-// import { connectDataBase, getAllTodos, insertTodo, updateTodo, deleteTodo } from './database.js'
- 
 import { connectDataBase } from './database.js'
 
 const app = express()
 connectDataBase()
 
-// app.use(express.json())
+app.use(express.json())
 
-// app.get('/todos', async (req, res) => {
-//   try {
-//     const Todo = await getAllTodos()
-//     res.json(Todo)
-//   } catch (error) {
-//     res.status(500).send(error)
-//   }
-// })
+app.get('/todos', async (req, res) => {
+  try {
+    const Todo = await getAllTodos()
+    res.json(Todo)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
 
 // app.post('/addTodo', async (req, res) => {
 //   try {

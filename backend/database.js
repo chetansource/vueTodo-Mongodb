@@ -22,7 +22,7 @@ export async function connectDataBase () {
 // const TodoTask = mongoose.model('TodoTask', todoTaskSchema) // TodoTask is model name
 
 // export async function getAllTodos () {
-//   const todos = await TodoTask.find({})
+//   const todos = await db.collection('todoList').find({}).toArray()
 //   return todos
 // }
 
