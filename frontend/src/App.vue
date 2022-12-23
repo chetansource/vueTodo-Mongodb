@@ -104,19 +104,35 @@ export default {
   margin-right: 1px;
 }
 .tasks {
-  width: 380px;
+  width: 450px;
   font-weight: bold;
   font-size: 16px;
-  height: 30px;
+  height: 33px;
   padding-left: 10px;
 }
 .dropdown-menu {
-  border-style: groove;
+  border-style: ridge;
   background-color: rgb(85, 255, 198);
+  margin-left: 620px;
+  margin-right: 620px;
 }
 .textarea {
-  width: 380px;
-  height: 180px;
+  width: 510px;
+  height: 170px;
   resize: none;
+}
+#dateInput {
+  margin-right: 20px;
+}
+.prior {
+  margin-right: 20px;
+  font-size: 12px;
+}
+.destroy {
+  width: 80px;
+  font-size: 16px;
+}
+.destroy:hover {
+  background-color: rgb(251, 114, 114);
 }
 </style>
