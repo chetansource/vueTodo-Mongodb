@@ -1,44 +1,59 @@
-import { MongoClient } from 'mongodb'
+import { MongoClient, ObjectId } from 'mongodb'
 const url = 'mongodb://localhost:27017'
-const database = 'todoListDb'
+const dbName = 'todoListDb'
 const client = new MongoClient(url)
 
 export async function connectDataBase () {
-  const result = await client.connect()
-  console.log('Connected successfully to server')
-  const db = result.db(database)
-  const collection = db.collection('todoList')
-  const findResult = await collection.find({}).toArray()
-  console.log('Found documents =>', findResult)
+  try {
+    const result = await client.connect()
+    const db = result.db(dbName)
+    db.collection('todoList')
+    console.log('Connected successfully to server')
+  } catch (error) {
+    console.log(error)
+  }
 }
 
-// const todoTaskSchema = new mongoose.Schema({
-//   title: String,
-//   checkbox: Boolean,
-//   notes: String,
-//   dueDate: String,
-//   priority: String
-// })
-// const TodoTask = mongoose.model('TodoTask', todoTaskSchema) // TodoTask is model name
+export async function getAllTodos () {
+  const database = client.db(dbName)
+  const collection = database.collection('todoList')
+  const todos = await collection.find({}).toArray()
+  return todos
+}
 
-// export async function getAllTodos () {
-//   const todos = await db.collection('todoList').find({}).toArray()
-//   return todos
-// }
+export async function insertTodo (todo) {
+  const database = client.db(dbName)
+  const collection = database.collection('todoList')
+  const doc = {
+    title: todo,
+    checkbox: false,
+    notes: '',
+    dueDate: '',
+    priority: ''
 
-// export async function insertTodo (todo) {
-//   const addTodos = new TodoTask({ title: todo, checkbox: false })
-//   return await addTodos.save()
-// }
+  }
+  const addTodos = collection.insertOne(doc)
+  return await addTodos
+}
 
-// export async function updateTodo (id, property, value) {
-//   const update = {}
-//   update[property] = value
-//   const updatetodo = await TodoTask.findOneAndUpdate({ _id: id }, update)
-//   return updatetodo
-// }
+export async function updateTodo (id, property, value) {
+  id = id.slice(1)
+  const database = client.db(dbName)
+  const collection = database.collection('todoList')
+  const update = {}
+  update[property] = value
+  const updateTodo = await collection.updateOne({ _id: ObjectId(id) }, { $set: update })
+  console.log(updateTodo)
+  return updateTodo
+}
 
-// export async function deleteTodo (id) {
-//   const deleteTodo = await TodoTask.remove({ _id: id })
-//   return deleteTodo
-// }
+export async function deleteTodo (id) {
+  try {
+    id = id.slice(1)
+    console.log(id, typeof (id))
+    const database = client.db(dbName)
+    const collection = database.collection('todoList')
+    const deleteTodo = await collection.deleteOne({ _id: ObjectId(id) })
+    return deleteTodo
+  } catch (e) { console.log(e) }
+}

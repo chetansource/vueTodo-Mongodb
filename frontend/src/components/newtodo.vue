@@ -1,4 +1,5 @@
 <template>
+  <!-- have a update button -->
   <div class="new-Todos">
     <input
       class="checkBox"
@@ -80,10 +81,11 @@ export default {
       this.$emit("Rerender")
     },
   },
+  // use spread operator and change the name, remove the id argu in delete todo, localstorage funcion
 }
 </script>
 
-<style>
+<style scoped>
 .new-Todos {
   text-align: center;
   padding-right: 70px;
@@ -91,3 +93,5 @@ export default {
   padding-left: 70px;
 }
 </style>
+<!-- bem covention to css -->
+<!-- learn em and rem -->
