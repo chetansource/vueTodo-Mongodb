@@ -5,7 +5,7 @@
       class="checkBox"
       type="checkbox"
       v-model="todo.checkbox"
-      v-on:click="updateCheckbox('checkbox')"
+      v-on:input="updateCheckbox('checkbox')"
     />
     <input
       class="tasks"
@@ -19,14 +19,14 @@
         class="textarea"
         v-model="todo.notes"
         placeholder="notes"
-        v-on:click="updateNote('notes')"
+        v-on:input="updateNote('notes')"
       ></textarea>
       <label for="dateInput">Due Date:</label>
       <input
         type="date"
         id="dateInput"
         v-model="todo.dueDate"
-        v-on:click="updateDueDate('dueDate')"
+        v-on:input="updateDueDate('dueDate')"
       />
       <label for="prior">Priority:</label>
       <select class="prior" v-model="todo.priority">
