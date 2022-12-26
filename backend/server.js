@@ -5,7 +5,7 @@ import { connectDataBase, getAllTodos, insertTodo, updateTodo, deleteTodo } from
 const app = express()
 connectDataBase()
 
-app.use(cors({methods:['GET','POST','DELETE','PUT']}))  //  enable all cors request
+app.use(cors({ methods: ['GET', 'POST', 'DELETE', 'PUT'] })) //  enable all cors request
 app.use(express.json())
 
 app.get('/todos', async (req, res) => {
@@ -19,7 +19,7 @@ app.get('/todos', async (req, res) => {
 // inspect the error  message  send to the user
 app.post('/addTodo', async (req, res) => {
   try {
-    const addTodo = await insertTodo(req.body.text)
+    const addTodo = await insertTodo(req.body.title)
     res.json(addTodo)
   } catch (error) {
     res.status(500).send(error)

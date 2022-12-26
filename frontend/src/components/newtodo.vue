@@ -19,14 +19,14 @@
         class="textarea"
         v-model="todo.notes"
         placeholder="notes"
-        v-on:click="updateTodo"
+        v-on:click="updateTodo('notes')"
       ></textarea>
       <label for="dateInput">Due Date:</label>
       <input
         type="date"
         id="dateInput"
-        v-model="todo.dateInput"
-        v-on:click="updateTodo"
+        v-model="todo.dueDate"
+        v-on:click="updateTodo('dueDate')"
       />
       <label for="prior">Priority:</label>
       <select class="prior" v-model="todo.priority">
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { reformTodo } from "../Fetchrequest.js"
 export default {
   name: "createTodo",
   props: ["items"],
@@ -58,6 +59,7 @@ export default {
   methods: {
     toggle() {
       this.showdropdown = !this.showdropdown
+      console.log(this.todo)
     },
     updateCheckbox() {
       const tempTodos = JSON.parse(localStorage.getItem("todosArray"))
@@ -65,13 +67,14 @@ export default {
       tempTodo.checkbox = !this.todo.checkbox
       localStorage.setItem("todosArray", JSON.stringify(tempTodos))
     },
-    updateTodo() {
-      const tempTodos = JSON.parse(localStorage.getItem("todosArray"))
-      const tempTodo = tempTodos.find((obj) => obj.id === this.todo.id)
-      tempTodo.notes = this.todo.notes
-      tempTodo.dateInput = this.todo.dateInput
-      tempTodo.priority = this.todo.priority
-      localStorage.setItem("todosArray", JSON.stringify(tempTodos))
+    updateTodo(property) {
+      reformTodo(this.todo._id, property, this.todo.notes)
+      // const tempTodos = JSON.parse(localStorage.getItem("todosArray"))
+      // const tempTodo = tempTodos.find((obj) => obj.id === this.todo.id)
+      // tempTodo.notes = this.todo.notes
+      // tempTodo.dateInput = this.todo.dueDate
+      // tempTodo.priority = this.todo.priority
+      // localStorage.setItem("todosArray", JSON.stringify(tempTodos))
       // this.$emit("Rerender");
     },
     deleteTodo(id) {

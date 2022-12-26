@@ -23,13 +23,12 @@
 
 <script>
 import createTodo from "./components/newtodo.vue"
-import { fetchTodos } from "./Fetchrequest.js"
+import { fetchTodos, attachTodo } from "./Fetchrequest.js"
 export default {
   name: "App",
   data() {
     return {
       todosArray: [],
-      id: 0,
       newTodo: "",
       priority: "",
     }
@@ -39,25 +38,13 @@ export default {
     async reRenderTodos() {
       this.todosArray = await fetchTodos() //JSON.parse(localStorage.getItem("todosArray"))
     },
-    addTodo() {
+    async addTodo() {
       if (this.newTodo === "") {
-        console.log(Math.max(this.todosArray.length))
         alert("please enter the task")
         return
       }
-
-      this.todosArray.push({
-        id:
-          this.todosArray.length === 0
-            ? 0
-            : Math.max(...this.todosArray.map((e) => e.id)) + 1,
-        title: this.newTodo,
-        checkbox: false,
-        notes: "",
-        dueDate: "",
-        priority: "",
-      })
-      localStorage.setItem("todosArray", JSON.stringify(this.todosArray))
+      await attachTodo(this.newTodo)
+      this.reRenderTodos()
       this.newTodo = ""
     },
   },
@@ -67,7 +54,6 @@ export default {
   //life cycle hook
   async created() {
     this.todosArray = await fetchTodos()
-    console.log(this.todosArray)
   },
 }
 </script>
