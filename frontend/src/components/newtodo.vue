@@ -11,7 +11,7 @@
       class="tasks"
       type="text"
       v-bind:class="{ done: todo.checkbox }"
-      v-model="todo.text"
+      v-model="todo.title"
       v-on:click="toggle()"
     />
     <div class="dropdown-menu" v-show="showdropdown">

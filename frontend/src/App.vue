@@ -17,7 +17,7 @@
     v-for="todo in todosArray"
     v-bind:key="todo.id"
     :items="todo"
-    @Rerender="fetchTodos"
+    @Rerender="reRenderTodos"
   />
 </template>
 
@@ -26,9 +26,9 @@ import createTodo from "./components/newtodo.vue"
 import { fetchTodos } from "./Fetchrequest.js"
 export default {
   name: "App",
-  async data() {
+  data() {
     return {
-      todosArray: (await fetchTodos()) || [],
+      todosArray: [],
       id: 0,
       newTodo: "",
       priority: "",
@@ -36,12 +36,11 @@ export default {
   },
 
   methods: {
-    fetchTodos() {
-      this.todosArray = JSON.parse(localStorage.getItem("todosArray"))
+    async reRenderTodos() {
+      this.todosArray = await fetchTodos() //JSON.parse(localStorage.getItem("todosArray"))
     },
     addTodo() {
       if (this.newTodo === "") {
-        console.log(this.todosArray)
         console.log(Math.max(this.todosArray.length))
         alert("please enter the task")
         return
@@ -52,10 +51,10 @@ export default {
           this.todosArray.length === 0
             ? 0
             : Math.max(...this.todosArray.map((e) => e.id)) + 1,
-        text: this.newTodo,
+        title: this.newTodo,
         checkbox: false,
         notes: "",
-        dateInput: "",
+        dueDate: "",
         priority: "",
       })
       localStorage.setItem("todosArray", JSON.stringify(this.todosArray))
@@ -64,6 +63,11 @@ export default {
   },
   components: {
     createTodo,
+  },
+  //life cycle hook
+  async created() {
+    this.todosArray = await fetchTodos()
+    console.log(this.todosArray)
   },
 }
 </script>
