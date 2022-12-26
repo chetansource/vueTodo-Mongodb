@@ -26,7 +26,7 @@ export async function insertTodo (todo) {
   const collection = database.collection('todoList')
   const doc = {
     title: todo,
-    checkbox: false,
+    checkbox: '',
     notes: '',
     dueDate: '',
     priority: ''
@@ -37,19 +37,15 @@ export async function insertTodo (todo) {
 }
 
 export async function updateTodo (id, property, value) {
-  id = id.slice(1)
   const database = client.db(dbName)
   const collection = database.collection('todoList')
   const update = {}
   update[property] = value
   const updateTodo = await collection.updateOne({ _id: ObjectId(id) }, { $set: update })
-  console.log(updateTodo)
   return updateTodo
 }
 
 export async function deleteTodo (id) {
-  id = id.slice(1)
-  console.log(id, typeof (id))
   const database = client.db(dbName)
   const collection = database.collection('todoList')
   const deleteTodo = await collection.deleteOne({ _id: ObjectId(id) })

@@ -47,7 +47,7 @@ export async function reformTodo (id, field, val) {
         value: val
       })
     }
-    const url = `http://localhost:3000/reviseTodo/:${id}`
+    const url = `http://localhost:3000/reviseTodo/${id}`
     const response = await fetch(url, config)
     if (!response.ok) {
       throw new Error(`HTTP error status:${response.status}`)
@@ -58,4 +58,23 @@ export async function reformTodo (id, field, val) {
   }
 }
 
-// fetchTodos()
+ export async function removeTodo (id) {
+  try {
+    const config = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    const url = `http://localhost:3000/removeTodo/${id}`
+    const response = await fetch(url, config)
+    if (!response.ok) {
+      throw new Error(`HTTP error status:${response.status}`)
+    }
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// removeTodo()

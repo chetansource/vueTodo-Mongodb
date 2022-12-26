@@ -5,7 +5,7 @@
       class="checkBox"
       type="checkbox"
       v-model="todo.checkbox"
-      v-on:click="updateCheckbox"
+      v-on:click="updateCheckbox('checkbox')"
     />
     <input
       class="tasks"
@@ -19,32 +19,32 @@
         class="textarea"
         v-model="todo.notes"
         placeholder="notes"
-        v-on:click="updateTodo('notes')"
+        v-on:click="updateNote('notes')"
       ></textarea>
       <label for="dateInput">Due Date:</label>
       <input
         type="date"
         id="dateInput"
         v-model="todo.dueDate"
-        v-on:click="updateTodo('dueDate')"
+        v-on:click="updateDueDate('dueDate')"
       />
       <label for="prior">Priority:</label>
       <select class="prior" v-model="todo.priority">
         <option
           v-for="priority in options"
           v-bind:key="priority"
-          v-on:click="updateTodo"
+          v-on:click="updatePriority('priority')"
         >
           {{ priority }}
         </option>
       </select>
-      <button class="destroy" v-on:click="deleteTodo(todo.id)">Delete</button>
+      <button class="destroy" v-on:click="deleteTodo(todo._id)">Delete</button>
     </div>
   </div>
 </template>
 
 <script>
-import { reformTodo } from "../Fetchrequest.js"
+import { reformTodo, removeTodo } from "../Fetchrequest.js"
 export default {
   name: "createTodo",
   props: ["items"],
@@ -59,32 +59,28 @@ export default {
   methods: {
     toggle() {
       this.showdropdown = !this.showdropdown
-      console.log(this.todo)
     },
-    updateCheckbox() {
-      const tempTodos = JSON.parse(localStorage.getItem("todosArray"))
-      const tempTodo = tempTodos.find((obj) => obj.id === this.todo.id)
-      tempTodo.checkbox = !this.todo.checkbox
-      localStorage.setItem("todosArray", JSON.stringify(tempTodos))
+    updateCheckbox(property) {
+      reformTodo(this.todo._id, property, !this.todo.checkbox)
+      // this.$emit("Rerender")
     },
-    updateTodo(property) {
+    updateNote(property) {
       reformTodo(this.todo._id, property, this.todo.notes)
-      // const tempTodos = JSON.parse(localStorage.getItem("todosArray"))
-      // const tempTodo = tempTodos.find((obj) => obj.id === this.todo.id)
-      // tempTodo.notes = this.todo.notes
-      // tempTodo.dateInput = this.todo.dueDate
-      // tempTodo.priority = this.todo.priority
-      // localStorage.setItem("todosArray", JSON.stringify(tempTodos))
-      // this.$emit("Rerender");
+      // this.$emit("Rerender")
+    },
+    updateDueDate(property) {
+      reformTodo(this.todo._id, property, this.todo.dueDate)
+      // this.$emit("Rerender")
+    },
+    updatePriority(property) {
+      reformTodo(this.todo._id, property, this.todo.priority)
+      // this.$emit("Rerender")
     },
     deleteTodo(id) {
-      let tempTodos = JSON.parse(localStorage.getItem("todosArray"))
-      tempTodos = tempTodos.filter((todo) => todo.id !== id)
-      localStorage.setItem("todosArray", JSON.stringify(tempTodos))
+      removeTodo(id)
       this.$emit("Rerender")
     },
   },
-  // use spread operator and change the name, remove the id argu in delete todo, localstorage funcion
 }
 </script>
 
