@@ -23,12 +23,12 @@
 
 <script>
 import createTodo from "./components/newtodo.vue"
-// let id = 0;
+import { fetchTodos } from "./Fetchrequest.js"
 export default {
   name: "App",
-  data() {
+  async data() {
     return {
-      todosArray: JSON.parse(localStorage.getItem("todosArray")) || [],
+      todosArray: (await fetchTodos()) || [],
       id: 0,
       newTodo: "",
       priority: "",
@@ -41,6 +41,7 @@ export default {
     },
     addTodo() {
       if (this.newTodo === "") {
+        console.log(this.todosArray)
         console.log(Math.max(this.todosArray.length))
         alert("please enter the task")
         return

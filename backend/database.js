@@ -48,12 +48,10 @@ export async function updateTodo (id, property, value) {
 }
 
 export async function deleteTodo (id) {
-  try {
-    id = id.slice(1)
-    console.log(id, typeof (id))
-    const database = client.db(dbName)
-    const collection = database.collection('todoList')
-    const deleteTodo = await collection.deleteOne({ _id: ObjectId(id) })
-    return deleteTodo
-  } catch (e) { console.log(e) }
+  id = id.slice(1)
+  console.log(id, typeof (id))
+  const database = client.db(dbName)
+  const collection = database.collection('todoList')
+  const deleteTodo = await collection.deleteOne({ _id: ObjectId(id) })
+  return deleteTodo
 }

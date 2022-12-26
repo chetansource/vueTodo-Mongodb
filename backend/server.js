@@ -1,9 +1,11 @@
 import express from 'express'
+import cors from 'cors'
 import { connectDataBase, getAllTodos, insertTodo, updateTodo, deleteTodo } from './database.js'
 
 const app = express()
 connectDataBase()
 
+app.use(cors({methods:['GET','POST','DELETE','PUT']}))  //  enable all cors request
 app.use(express.json())
 
 app.get('/todos', async (req, res) => {
