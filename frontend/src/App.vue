@@ -72,7 +72,7 @@ export default {
   height: 40px;
 }
 #newinput {
-  width: 380px;
+  width: 400px;
   font-size: 20px;
   height: 30px;
 }
@@ -95,9 +95,9 @@ export default {
   margin-right: 1px;
 }
 .tasks {
-  width: 450px;
+  width: 580px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
   height: 33px;
   padding-left: 10px;
 }
@@ -105,26 +105,34 @@ export default {
   display: flex;
   flex-direction: row;
   border-style: ridge;
-  background-color: rgb(85, 255, 198);
+  background-color: rgb(41, 249, 180);
 }
 .textarea {
-  width: 510px;
-  height: 170px;
+  width: 450px;
+  height: 250px;
   resize: none;
 }
 #dateInput {
   display: flex;
-  margin-right: 20px;
+  height: 25px;
 }
 .prior {
   margin-right: 20px;
   font-size: 12px;
+  height: 25px;
 }
 .destroy {
   width: 80px;
   font-size: 16px;
+  height: 25px;
 }
 .destroy:hover {
   background-color: rgb(251, 114, 114);
+}
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

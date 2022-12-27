@@ -1,18 +1,20 @@
 <template>
   <div class="new-Todos">
-    <input
-      class="checkBox"
-      type="checkbox"
-      v-model="todo.checkbox"
-      v-on:input="updateCheckbox('checkbox')"
-    />
-    <input
-      class="tasks"
-      type="text"
-      v-bind:class="{ done: todo.checkbox }"
-      v-model="todo.title"
-      v-on:click="toggle()"
-    />
+    <div class="container1">
+      <input
+        class="checkBox"
+        type="checkbox"
+        v-model="todo.checkbox"
+        v-on:input="updateCheckbox('checkbox')"
+      />
+      <input
+        class="tasks"
+        type="text"
+        v-bind:class="{ done: todo.checkbox }"
+        v-model="todo.title"
+        v-on:click="toggle()"
+      />
+    </div>
     <div class="dropdown-menu" v-show="showdropdown">
       <textarea
         class="textarea"
@@ -20,24 +22,32 @@
         placeholder="notes"
         v-on:input="updateNote('notes')"
       ></textarea>
-      <label for="dateInput">Due Date:</label>
-      <input
-        type="date"
-        id="dateInput"
-        v-model="todo.dueDate"
-        v-on:input="updateDueDate('dueDate')"
-      />
-      <label for="prior">Priority:</label>
-      <select class="prior" v-model="todo.priority">
-        <option
-          v-for="priority in options"
-          v-bind:key="priority"
-          v-on:click="updatePriority('priority')"
-        >
-          {{ priority }}
-        </option>
-      </select>
-      <button class="destroy" v-on:click="deleteTodo(todo._id)">Delete</button>
+      <div class="flex-container">
+        <div class="dateDiv">
+          <label for="dateInput">Due Date:</label>
+          <input
+            type="date"
+            id="dateInput"
+            v-model="todo.dueDate"
+            v-on:input="updateDueDate('dueDate')"
+          />
+        </div>
+        <div class="priorDiv">
+          <label for="prior">Priority:</label>
+          <select class="prior" v-model="todo.priority">
+            <option
+              v-for="priority in options"
+              v-bind:key="priority"
+              v-on:click="updatePriority('priority')"
+            >
+              {{ priority }}
+            </option>
+          </select>
+        </div>
+        <button class="destroy" v-on:click="deleteTodo(todo._id)">
+          Delete
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -81,9 +91,10 @@ export default {
 
 <style scoped>
 .new-Todos {
-  background: rebeccapurple;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4px;
 }
 </style>
 <!-- bem covention to css -->
