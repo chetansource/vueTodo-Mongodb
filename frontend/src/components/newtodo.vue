@@ -1,5 +1,4 @@
 <template>
-  <!-- have a update button -->
   <div class="new-Todos">
     <input
       class="checkBox"
@@ -62,19 +61,15 @@ export default {
     },
     updateCheckbox(property) {
       reformTodo(this.todo._id, property, !this.todo.checkbox)
-      // this.$emit("Rerender")
     },
     updateNote(property) {
       reformTodo(this.todo._id, property, this.todo.notes)
-      // this.$emit("Rerender")
     },
     updateDueDate(property) {
       reformTodo(this.todo._id, property, this.todo.dueDate)
-      // this.$emit("Rerender")
     },
     updatePriority(property) {
       reformTodo(this.todo._id, property, this.todo.priority)
-      // this.$emit("Rerender")
     },
     deleteTodo(id) {
       removeTodo(id)
@@ -86,10 +81,9 @@ export default {
 
 <style scoped>
 .new-Todos {
-  text-align: center;
-  padding-right: 70px;
-  margin-top: 5px;
-  padding-left: 70px;
+  background: rebeccapurple;
+  display: flex;
+  justify-content: center;
 }
 </style>
 <!-- bem covention to css -->

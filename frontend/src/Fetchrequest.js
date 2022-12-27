@@ -77,4 +77,3 @@ export async function reformTodo (id, field, val) {
   }
 }
 
-// removeTodo()

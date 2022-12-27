@@ -36,7 +36,7 @@ export default {
 
   methods: {
     async reRenderTodos() {
-      this.todosArray = await fetchTodos() //JSON.parse(localStorage.getItem("todosArray"))
+      this.todosArray = await fetchTodos()
     },
     async addTodo() {
       if (this.newTodo === "") {
@@ -44,7 +44,7 @@ export default {
         return
       }
       await attachTodo(this.newTodo)
-      this.reRenderTodos()
+      this.todosArray = await fetchTodos()
       this.newTodo = ""
     },
   },
@@ -67,8 +67,9 @@ export default {
   font-size: 35px;
 }
 #todotitle {
+  display: flex;
+  justify-content: center;
   height: 40px;
-  text-align: center;
 }
 #newinput {
   width: 380px;
@@ -80,7 +81,6 @@ export default {
   font-size: 15px;
   font-weight: bold;
   height: 37px;
-  margin-top: 5px;
 }
 #sub-btn:hover {
   background-color: greenyellow;
@@ -102,10 +102,10 @@ export default {
   padding-left: 10px;
 }
 .dropdown-menu {
+  display: flex;
+  flex-direction: row;
   border-style: ridge;
   background-color: rgb(85, 255, 198);
-  margin-left: 620px;
-  margin-right: 620px;
 }
 .textarea {
   width: 510px;
@@ -113,6 +113,7 @@ export default {
   resize: none;
 }
 #dateInput {
+  display: flex;
   margin-right: 20px;
 }
 .prior {
