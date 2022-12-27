@@ -19,6 +19,12 @@
     :items="todo"
     @Rerender="reRenderTodos"
   />
+  <footer class="footer">
+    <button class="delDone">DeleteDone</button>
+    <button class="delAll">DeleteAll</button>
+    <button class="targetComplete">ShowDone</button>
+    <button class="displayAll">ShowAll</button>
+  </footer>
 </template>
 
 <script>
@@ -87,6 +93,7 @@ export default {
 }
 .done {
   text-decoration: line-through;
+  background-color: rgb(232, 153, 125);
 }
 
 .checkBox {
@@ -134,5 +141,41 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+.footer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 550px;
+  height: 50px;
+  justify-content: center;
+  justify-content: space-around;
+}
+.delDone {
+  font-size: 20px;
+  width: 150px;
+}
+.delAll {
+  font-size: 20px;
+  width: 150px;
+}
+.targetComplete {
+  font-size: 20px;
+  width: 150px;
+}
+.displayAll {
+  font-size: 20px;
+  width: 150px;
+}
+.displayAll:hover {
+  background-color: rgb(83, 255, 83);
+}
+.delAll:hover {
+  background-color: rgb(217, 34, 34);
+}
+.delDone:hover {
+  background-color: rgb(245, 95, 95);
+}
+.targetComplete:hover {
+  background-color: rgb(117, 235, 150);
 }
 </style>
