@@ -20,16 +20,21 @@
     @Rerender="reRenderTodos"
   />
   <footer class="footer">
-    <button class="delDone">DeleteDone</button>
-    <button class="delAll">DeleteAll</button>
-    <button class="targetComplete">ShowDone</button>
-    <button class="displayAll">ShowAll</button>
+    <button v-on:click="deleteDone" class="delDone">DeleteDone</button>
+    <button v-on:click="deleteAll" class="delAll">DeleteAll</button>
+    <button v-on:click="showDone" class="targetComplete">ShowDone</button>
+    <button v-on:click="showAll" class="displayAll">ShowAll</button>
   </footer>
 </template>
 
 <script>
 import createTodo from "./components/newtodo.vue"
-import { fetchTodos, attachTodo } from "./Fetchrequest.js"
+import {
+  fetchTodos,
+  attachTodo,
+  removeDone,
+  removeAll,
+} from "./Fetchrequest.js"
 export default {
   name: "App",
   data() {
@@ -53,6 +58,16 @@ export default {
       this.todosArray = await fetchTodos()
       this.newTodo = ""
     },
+    async deleteDone() {
+      await removeDone()
+      this.reRenderTodos()
+    },
+    async deleteAll() {
+      await removeAll()
+      this.reRenderTodos()
+    },
+    async showDone() {},
+    async showAll() {},
   },
   components: {
     createTodo,
@@ -148,23 +163,32 @@ export default {
   margin-top: 550px;
   height: 50px;
   justify-content: center;
+  position: fixed;
   justify-content: space-around;
 }
 .delDone {
   font-size: 20px;
   width: 150px;
+  margin-right: 200px;
+  margin-left: 100px;
 }
 .delAll {
   font-size: 20px;
   width: 150px;
+  margin-right: 200px;
+  margin-left: 200px;
 }
 .targetComplete {
   font-size: 20px;
   width: 150px;
+  margin-right: 200px;
+  margin-left: 200px;
 }
 .displayAll {
   font-size: 20px;
   width: 150px;
+  margin-right: 200px;
+  margin-left: 100px;
 }
 .displayAll:hover {
   background-color: rgb(83, 255, 83);

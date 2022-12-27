@@ -58,7 +58,7 @@ export async function reformTodo (id, field, val) {
   }
 }
 
- export async function removeTodo (id) {
+export async function removeTodo (id) {
   try {
     const config = {
       method: 'DELETE',
@@ -77,3 +77,40 @@ export async function reformTodo (id, field, val) {
   }
 }
 
+export async function removeDone () {
+  try {
+    const config = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    const url = 'http://localhost:3000/removeDone'
+    const response = await fetch(url, config)
+    if (!response.ok) {
+      throw new Error(`HTTP error status:${response.status}`)
+    }
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function removeAll () {
+  try {
+    const config = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    const url = 'http://localhost:3000/removeAll'
+    const response = await fetch(url, config)
+    if (!response.ok) {
+      throw new Error(`HTTP error status:${response.status}`)
+    }
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}

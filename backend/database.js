@@ -51,3 +51,17 @@ export async function deleteTodo (id) {
   const deleteTodo = await collection.deleteOne({ _id: ObjectId(id) })
   return deleteTodo
 }
+
+export async function deleteDoneTodos () {
+  const database = client.db(dbName)
+  const collection = database.collection('todoList')
+  const deleteTodos = await collection.deleteMany({ checkbox: true })
+  return deleteTodos
+}
+
+export async function deleteAllTodos () {
+  const database = client.db(dbName)
+  const collection = database.collection('todoList')
+  const deleteAllTodos = await collection.deleteMany({ _id: ObjectId })
+  return deleteAllTodos
+}

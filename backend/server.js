@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { connectDataBase, getAllTodos, insertTodo, updateTodo, deleteTodo } from './database.js'
+import { connectDataBase, getAllTodos, insertTodo, updateTodo, deleteTodo, deleteDoneTodos, deleteAllTodos } from './database.js'
 
 const app = express()
 connectDataBase()
@@ -38,6 +38,24 @@ app.put('/reviseTodo/:id', async (req, res) => {
 app.delete('/removeTodo/:id', async (req, res) => {
   try {
     await deleteTodo(req.params.id)
+    res.status(200)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
+app.delete('/removeDone/', async (req, res) => {
+  try {
+    await deleteDoneTodos()
+    res.status(200)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
+app.delete('/removeAll/', async (req, res) => {
+  try {
+    await deleteAllTodos()
     res.status(200)
   } catch (error) {
     res.status(500).send(error)
