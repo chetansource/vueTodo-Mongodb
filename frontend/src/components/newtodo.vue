@@ -13,6 +13,7 @@
         v-bind:class="{ done: todo.checkbox }"
         v-model="todo.title"
         v-on:click="toggle()"
+        v-on:input="updateTitle('title')"
       />
     </div>
     <div class="dropdown-menu" v-show="showdropdown">
@@ -44,9 +45,7 @@
             </option>
           </select>
         </div>
-        <button class="destroy" v-on:click="deleteTodo(todo._id)">
-          Delete
-        </button>
+        <button class="destroy" v-on:click="deleteTodo(todo.id)">Delete</button>
       </div>
     </div>
   </div>
@@ -57,7 +56,7 @@ import { reformTodo, removeTodo } from "../Fetchrequest.js"
 export default {
   name: "createTodo",
   props: ["items"],
-  emits: ["Rerender"],
+  emits: ["reRender"],
   data() {
     return {
       todo: this.items,
@@ -69,21 +68,26 @@ export default {
     toggle() {
       this.showdropdown = !this.showdropdown
     },
-    updateCheckbox(property) {
-      reformTodo(this.todo._id, property, !this.todo.checkbox)
+    async updateCheckbox(property) {
+      console.log(this.todo)
+      await reformTodo(this.todo.id, property, !this.todo.checkbox)
     },
-    updateNote(property) {
-      reformTodo(this.todo._id, property, this.todo.notes)
+    async updateTitle(property) {
+      await reformTodo(this.todo.id, property, this.todo.title)
     },
-    updateDueDate(property) {
-      reformTodo(this.todo._id, property, this.todo.dueDate)
+    async updateNote(property) {
+      await reformTodo(this.todo.id, property, this.todo.notes)
     },
-    updatePriority(property) {
-      reformTodo(this.todo._id, property, this.todo.priority)
+    async updateDueDate(property) {
+      await reformTodo(this.todo.id, property, this.todo.dueDate)
     },
-    deleteTodo(id) {
-      removeTodo(id)
-      this.$emit("Rerender")
+    async updatePriority(property) {
+      await reformTodo(this.todo.id, property, this.todo.priority)
+    },
+    async deleteTodo(id) {
+      console.log(id)
+      await removeTodo(id)
+      this.$emit("reRender")
     },
   },
 }

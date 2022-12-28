@@ -17,7 +17,7 @@
     v-for="todo in todosArray"
     v-bind:key="todo.id"
     :items="todo"
-    @Rerender="reRenderTodos"
+    @reRender="reRenderTodos"
   />
   <footer class="footer">
     <button v-on:click="deleteDone" class="delDone">DeleteDone</button>
@@ -86,7 +86,7 @@ export default {
 
 <style>
 #app {
-  background-color: rgba(95, 220, 242, 0.622);
+  background-color: rgba(150, 205, 242, 0.672);
 }
 #h1 {
   text-align: center;
@@ -132,7 +132,7 @@ export default {
   display: flex;
   flex-direction: row;
   border-style: ridge;
-  background-color: rgb(41, 249, 180);
+  background-color: rgb(167, 223, 245);
 }
 .textarea {
   width: 450px;
@@ -169,7 +169,9 @@ export default {
   height: 50px;
   justify-content: center;
   position: fixed;
+  bottom: 0;
   justify-content: space-around;
+  margin-bottom: 50px;
 }
 .delDone {
   font-size: 20px;

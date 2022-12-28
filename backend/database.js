@@ -14,11 +14,20 @@ export async function connectDataBase () {
   }
 }
 
+const renameKey = (object, key, newKey) => {
+  object[newKey] = object[key]
+  delete object[key]
+  return object
+}
+
+const renameTodoId = (todo) => renameKey(todo, '_id', 'id')
+
 export async function getAllTodos () {
   const database = client.db(dbName)
   const collection = database.collection('todoList')
   const todos = await collection.find({}).toArray()
-  return todos
+  const todosNew = todos.map(renameTodoId)
+  return todosNew
 }
 
 export async function insertTodo (todo) {
@@ -32,8 +41,8 @@ export async function insertTodo (todo) {
     priority: ''
 
   }
-  const addTodos = collection.insertOne(doc)
-  return await addTodos
+  const addTodo = collection.insertOne(doc)
+  return await addTodo
 }
 
 export async function updateTodo (id, property, value) {
@@ -69,6 +78,6 @@ export async function deleteAllTodos () {
 export async function getcompletedTodos () {
   const database = client.db(dbName)
   const collection = database.collection('todoList')
-  const doneTodos = await collection.find({ title: 'todo1' }).toArray()
-  return doneTodos
+  const doneTodos = await collection.find({ checkbox: true }).toArray()
+  return doneTodos.map(renameTodoId)
 }

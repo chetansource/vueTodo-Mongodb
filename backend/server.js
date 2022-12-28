@@ -38,7 +38,7 @@ app.put('/reviseTodo/:id', async (req, res) => {
 app.delete('/removeTodo/:id', async (req, res) => {
   try {
     await deleteTodo(req.params.id)
-    res.status(200)
+    res.sendStatus(200)
   } catch (error) {
     res.status(500).send(error)
   }
@@ -47,7 +47,7 @@ app.delete('/removeTodo/:id', async (req, res) => {
 app.delete('/removeDone/', async (req, res) => {
   try {
     await deleteDoneTodos()
-    res.status(200)
+    res.sendStatus(200)
   } catch (error) {
     res.status(500).send(error)
   }
@@ -56,7 +56,7 @@ app.delete('/removeDone/', async (req, res) => {
 app.delete('/removeAll/', async (req, res) => {
   try {
     await deleteAllTodos()
-    res.status(200)
+    res.sendStatus(200)
   } catch (error) {
     res.status(500).send(error)
   }
