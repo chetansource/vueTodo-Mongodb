@@ -65,3 +65,10 @@ export async function deleteAllTodos () {
   const deleteAllTodos = await collection.deleteMany({ _id: ObjectId })
   return deleteAllTodos
 }
+
+export async function getcompletedTodos () {
+  const database = client.db(dbName)
+  const collection = database.collection('todoList')
+  const doneTodos = await collection.find({ title: 'todo1' }).toArray()
+  return doneTodos
+}

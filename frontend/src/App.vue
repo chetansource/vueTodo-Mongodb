@@ -34,6 +34,7 @@ import {
   attachTodo,
   removeDone,
   removeAll,
+  showCompleted,
 } from "./Fetchrequest.js"
 export default {
   name: "App",
@@ -66,8 +67,12 @@ export default {
       await removeAll()
       this.reRenderTodos()
     },
-    async showDone() {},
-    async showAll() {},
+    async showDone() {
+      this.todosArray = await showCompleted()
+    },
+    async showAll() {
+      this.todosArray = await fetchTodos()
+    },
   },
   components: {
     createTodo,
@@ -81,7 +86,7 @@ export default {
 
 <style>
 #app {
-  background-color: aquamarine;
+  background-color: rgba(95, 220, 242, 0.622);
 }
 #h1 {
   text-align: center;
