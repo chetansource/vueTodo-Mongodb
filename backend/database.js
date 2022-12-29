@@ -1,4 +1,5 @@
 import { MongoClient, ObjectId } from 'mongodb'
+import { renameKey } from './utility.js'
 const url = 'mongodb://localhost:27017'
 const dbName = 'todoListDb'
 const client = new MongoClient(url)
@@ -12,12 +13,6 @@ export async function connectDataBase () {
   } catch (error) {
     console.log(error)
   }
-}
-
-const renameKey = (object, key, newKey) => {
-  object[newKey] = object[key]
-  delete object[key]
-  return object
 }
 
 const renameTodoId = (todo) => renameKey(todo, '_id', 'id')
