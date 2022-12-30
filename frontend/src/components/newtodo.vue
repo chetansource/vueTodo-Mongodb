@@ -69,7 +69,6 @@ export default {
       this.showdropdown = !this.showdropdown
     },
     async updateCheckbox(property) {
-      console.log(this.todo)
       await reformTodo(this.todo.id, property, !this.todo.checkbox)
     },
     async updateTitle(property) {
@@ -85,7 +84,6 @@ export default {
       await reformTodo(this.todo.id, property, this.todo.priority)
     },
     async deleteTodo(id) {
-      console.log(id)
       await removeTodo(id)
       this.$emit("reRender")
     },

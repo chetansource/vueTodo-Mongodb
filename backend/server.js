@@ -16,7 +16,7 @@ app.get('/todos', async (req, res) => {
     res.status(500).send(error)
   }
 })
-// inspect the error  message  send to the user
+
 app.post('/addTodo', async (req, res) => {
   try {
     const addTodo = await insertTodo(req.body.title)
