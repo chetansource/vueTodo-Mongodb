@@ -5,7 +5,7 @@
         class="checkBox"
         type="checkbox"
         v-model="todo.checkbox"
-        v-on:input="updateCheckbox('checkbox')"
+        v-on:input="updateTodo('checkbox', !todo.checkbox)"
       />
       <input
         class="tasks"
@@ -13,7 +13,7 @@
         v-bind:class="{ done: todo.checkbox }"
         v-model="todo.title"
         v-on:click="toggle()"
-        v-on:input="updateTitle('title')"
+        v-on:input="updateTodo('title', todo.title)"
       />
     </div>
     <div class="dropdown-menu" v-show="showdropdown">
@@ -21,7 +21,7 @@
         class="textarea"
         v-model="todo.notes"
         placeholder="notes"
-        v-on:input="updateNote('notes')"
+        v-on:input="updateTodo('notes', todo.notes)"
       ></textarea>
       <div class="flex-container">
         <div class="dateDiv">
@@ -30,7 +30,7 @@
             type="date"
             id="dateInput"
             v-model="todo.dueDate"
-            v-on:input="updateDueDate('dueDate')"
+            v-on:input="updateTodo('dueDate', todo.dueDate)"
           />
         </div>
         <div class="priorDiv">
@@ -39,7 +39,7 @@
             <option
               v-for="priority in options"
               v-bind:key="priority"
-              v-on:click="updatePriority('priority')"
+              v-on:click="updateTodo('priority', todo.priority)"
             >
               {{ priority }}
             </option>
@@ -68,20 +68,8 @@ export default {
     toggle() {
       this.showdropdown = !this.showdropdown
     },
-    async updateCheckbox(property) {
-      await reformTodo(this.todo.id, property, !this.todo.checkbox)
-    },
-    async updateTitle(property) {
-      await reformTodo(this.todo.id, property, this.todo.title)
-    },
-    async updateNote(property) {
-      await reformTodo(this.todo.id, property, this.todo.notes)
-    },
-    async updateDueDate(property) {
-      await reformTodo(this.todo.id, property, this.todo.dueDate)
-    },
-    async updatePriority(property) {
-      await reformTodo(this.todo.id, property, this.todo.priority)
+    async updateTodo(property, value) {
+      await reformTodo(this.todo.id, property, value)
     },
     async deleteTodo(id) {
       await removeTodo(id)

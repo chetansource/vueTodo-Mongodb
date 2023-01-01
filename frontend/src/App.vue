@@ -51,7 +51,8 @@ export default {
       this.todosArray = await fetchTodos()
     },
     async addTodo() {
-      if (this.newTodo === "") {
+      this.newTodo.trim()
+      if (this.newTodo === "" || this.newTodo.trim() === "") {
         alert("please enter the task")
         return
       }
