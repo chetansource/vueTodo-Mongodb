@@ -79,7 +79,6 @@ export default {
       this.isActive = true
     },
     showAll() {
-      console.log(this.tempArray)
       this.todosArray = this.tempArray
       this.isActive = false
     },
