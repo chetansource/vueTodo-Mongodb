@@ -62,7 +62,4 @@ export async function deleteAllTodos () {
   return deleteAllTodos
 }
 
-export async function getcompletedTodos () {
-  const doneTodos = await collection.find({ checkbox: true }).toArray()
-  return doneTodos.map(renameTodoId)
-}
+

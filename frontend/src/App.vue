@@ -19,10 +19,13 @@
     :items="todo"
     @reRender="reRenderTodos"
   />
+
   <footer class="footer">
     <button v-on:click="deleteDone" class="delDone">DeleteDone</button>
     <button v-on:click="deleteAll" class="delAll">DeleteAll</button>
-    <button v-on:click="showDone" class="targetComplete">ShowDone</button>
+    <button :disabled="isActive" v-on:click="showDone" class="targetComplete">
+      ShowDone
+    </button>
     <button v-on:click="showAll" class="displayAll">ShowAll</button>
   </footer>
 </template>
@@ -34,7 +37,6 @@ import {
   attachTodo,
   removeDone,
   removeAll,
-  showCompleted,
 } from "./Fetchrequest.js"
 export default {
   name: "App",
@@ -43,6 +45,8 @@ export default {
       todosArray: [],
       newTodo: "",
       priority: "",
+      tempArray: [],
+      isActive: false,
     }
   },
 
@@ -68,11 +72,16 @@ export default {
       await removeAll()
       this.reRenderTodos()
     },
-    async showDone() {
-      this.todosArray = await showCompleted()
+    showDone() {
+      this.tempArray = this.todosArray
+      const newArray = this.todosArray.filter((e) => e.checkbox === true)
+      this.todosArray = newArray
+      this.isActive = true
     },
-    async showAll() {
-      this.todosArray = await fetchTodos()
+    showAll() {
+      console.log(this.tempArray)
+      this.todosArray = this.tempArray
+      this.isActive = false
     },
   },
   components: {
